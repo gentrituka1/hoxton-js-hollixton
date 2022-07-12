@@ -11,14 +11,24 @@ type StoreItem = {
     stock: number
 }
 
+type User = {
+    firstName: string,
+    lastName: string,
+    id: string,
+    password: string | number,
+    bag: []
+  }
+
 type State = {
     storeItems: StoreItem[]
     byType: string;
+    users: User[]
 }
 
 const state: State = {
     storeItems: [],
-    byType: ''
+    byType: '',
+    users: [],
 }
 
 
