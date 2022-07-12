@@ -18,6 +18,7 @@ body{
 header{
   grid-area: header;
   padding: 10px;
+  background-color: antiquewhite;
 }
 
 .the-logo{
@@ -30,6 +31,7 @@ header{
 header nav{
   display: grid;
   grid-auto-flow: column;
+  
 }
 
 .left-side-nav{
@@ -50,7 +52,7 @@ header nav{
   text-decoration: none;
   color: blue;
   font-size: 1.2rem;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .right-side-nav{
@@ -74,14 +76,25 @@ main{
   grid-area: main;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 .store-item{
   display: grid;
   gap: 10px;
   padding: 10px;
 }
-
+.discounted-price{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+}
+.discounted-price p{
+  text-decoration-line: line-through;
+}
+.discounted-price span{
+  color: red;
+  font-weight: bold;
+}
 /* footer area */
 
 footer{

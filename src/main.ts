@@ -13,10 +13,36 @@ type StoreItem = {
 
 type State = {
     storeItems: StoreItem[]
+    byType: string;
 }
 
 const state = {
     storeItems: {},
+    byType: ''
+}
+
+function renderStoreItemsByType(){
+    let mainEl = document.querySelector('main')
+    let girlsEl = document.querySelector('.girls-page')
+    girlsEl?.addEventListener('click', function (){
+    let storeItems = state.storeItems
+    let storeItemsHtml = ''
+    for(let item of storeItems){
+        if(item.type === 'girls')
+            storeItemsHtml += `
+            <div class="store-item">
+            <img src="${item.image}" alt="${item.name}" width="250">
+            <h3>${item.name}</h3>
+            <div class="discounted-price">
+            <p>$${item.price}</p>
+            <span>$${item.discountedPrice}</span>
+            </div>
+        </div>
+            `
+        }
+        mainEl.innerHTML = storeItemsHtml
+    })
+    
 }
 
 function getStoreItems(){
@@ -33,22 +59,26 @@ function renderStoreItems(){
     let storeItems = state.storeItems
     let storeItemsHtml = ''
     for(let item of storeItems){
-        storeItemsHtml += `
+        if(item.discountedPrice){
+            storeItemsHtml += `
+            <div class="store-item">
+            <img src="${item.image}" alt="${item.name}" width="250">
+            <h3>${item.name}</h3>
+            <div class="discounted-price">
+            <p>$${item.price}</p>
+            <span>$${item.discountedPrice}</span>
+            </div>
+        </div>
+            `
+        }
+        else {
+            storeItemsHtml += `
             <div class="store-item">
                 <img src="${item.image}" alt="${item.name}" width="250">
                 <h3>${item.name}</h3>
                 <p>$${item.price}</p>
             </div>
         `
-        if(item.discountedPrice){
-            storeItemsHtml += `
-            <div class="store-item">
-            <img src="${item.image}" alt="${item.name}" width="250">
-            <h3>${item.name}</h3>
-            <p>$${item.price}</p>
-            <span>$${item.discountedPrice}</span>
-        </div>
-            `
         }
     }
     mainEl.innerHTML = storeItemsHtml
@@ -60,6 +90,7 @@ function render(){
     mainEl.innerHTML = ''
 
     renderStoreItems()
+    renderStoreItemsByType()
 }
 getStoreItems()
 render()
