@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 body{
+  height: 100vh;
   display: grid;
   grid-template: 
   'header' auto
@@ -12,7 +13,7 @@ body{
   1fr;
 }
 
-
+/* header area */
 
 header{
   grid-area: header;
@@ -21,7 +22,7 @@ header{
 
 .the-logo{
   text-decoration: none;
-  color: black;
+  color: royalblue;
   font-size: 1.5em;
   font-family:Georgia, 'Times New Roman', Times, serif;
 }
@@ -47,12 +48,10 @@ header nav{
 }
 .left-side-nav-links a{
   text-decoration: none;
-  color: black;
+  color: blue;
   font-size: 1.2rem;
   font-family:Georgia, 'Times New Roman', Times, serif;
 }
-
-
 
 .right-side-nav{
   display: grid;
@@ -67,4 +66,43 @@ header nav{
 }
 .right-side-nav li span{
   font-size: 1.6rem; 
+}
+
+/* main area */
+
+main{
+  grid-area: main;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.store-item{
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+/* footer area */
+
+footer{
+  grid-area: footer;
+  padding: 20px;
+  
+  display: grid;
+  grid-auto-flow: column;
+  background-color: rgba(110, 109, 109, 0.308);
+}
+.footer-left{
+  display: grid;
+  justify-content: start;
+  font-size: 0.8rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.footer-right{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
 }
