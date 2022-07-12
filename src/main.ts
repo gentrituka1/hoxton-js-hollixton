@@ -116,6 +116,47 @@ function renderStoreItemsByTypeSale(){
     })
 }
 
+function renderFilteredStoreItems(){
+    let mainEl = document.querySelector('main')
+    let searchEl = document.querySelector('.search-bar')
+    searchEl?.addEventListener('click', function(){
+        let searchInputEl = document.createElement('input')
+        searchInputEl.type = 'text';
+        searchInputEl.placeholder = 'Search the item name';
+        searchInputEl.className = 'search-input'
+        searchEl?.appendChild(searchInputEl)
+        searchInputEl.addEventListener('keyup', function(){
+            let searchInput = searchInputEl.value.toLowerCase()
+            let storeItems = state.storeItems
+            let storeItemsHtml = ''
+            for(let item of storeItems){
+                if(item.name.toLowerCase().includes(searchInput) && item.discountedPrice){
+                    storeItemsHtml += `
+                    <div class="store-item">
+                    <img src="${item.image}" alt="${item.name}" width="250">
+                    <h3>${item.name}</h3>
+                    <div class="discounted-price">
+                    <p>$${item.price}</p>
+                    <span>$${item.discountedPrice}</span>
+                    </div>
+                </div>
+                    `
+                } else if(item.name.toLowerCase().includes(searchInput) && item.discountedPrice === undefined){
+                    storeItemsHtml += `
+                    <div class="store-item">
+                        <img src="${item.image}" alt="${item.name}" width="250">
+                        <h3>${item.name}</h3>
+                        <p>$${item.price}</p>
+                    </div>
+                    `
+                    }
+                }
+            
+            mainEl.innerHTML = storeItemsHtml
+        })
+}, {once : true})
+
+}
 function getStoreItems(){
     fetch('http://localhost:3001/store')
     .then(res => res.json())
@@ -169,7 +210,9 @@ function render(){
     renderStoreItemsByTypeGirls()
     renderStoreItemsByTypeGuys()
     renderStoreItemsByTypeSale()
+    
 }
+renderFilteredStoreItems()
 getStoreItems()
 render()
 
