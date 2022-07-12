@@ -6,7 +6,7 @@ type StoreItem = {
     name: string,
     image: string,
     price: number,
-    discountedPrice: number,
+    discountedPrice?: number,
     dateEntered: string,
     stock: number
 }
@@ -16,19 +16,90 @@ type State = {
     byType: string;
 }
 
-const state = {
-    storeItems: {},
+const state: State = {
+    storeItems: [],
     byType: ''
 }
 
-function renderStoreItemsByType(){
+
+function renderStoreItemsByTypeGirls(){
     let mainEl = document.querySelector('main')
     let girlsEl = document.querySelector('.girls-page')
     girlsEl?.addEventListener('click', function (){
     let storeItems = state.storeItems
     let storeItemsHtml = ''
     for(let item of storeItems){
-        if(item.type === 'girls')
+        if(item.type.toLowerCase() === 'girls' && item.discountedPrice){
+            storeItemsHtml += `
+            <div class="store-item">
+            <img src="${item.image}" alt="${item.name}" width="250">
+            <h3>${item.name}</h3>
+            <div class="discounted-price">
+            <p>$${item.price}</p>
+            <span>$${item.discountedPrice}</span>
+            </div>
+        </div>
+            `
+        }   
+        else if(item.type.toLowerCase() === 'girls' && item.discountedPrice === undefined){
+            storeItemsHtml += `
+            <div class="store-item">
+                <img src="${item.image}" alt="${item.name}" width="250">
+                <h3>${item.name}</h3>
+                <p>$${item.price}</p>
+            </div>
+            `
+            }
+        }
+        
+        mainEl.innerHTML = storeItemsHtml
+    })
+    
+}
+
+function renderStoreItemsByTypeGuys(){
+    let mainEl = document.querySelector('main')
+    let guysEl = document.querySelector('.guys-page')
+    guysEl?.addEventListener('click', function (){
+    let storeItems = state.storeItems
+    let storeItemsHtml = ''
+    for(let item of storeItems){
+        if(item.type.toLowerCase() === 'guys' && item.discountedPrice){
+            storeItemsHtml += `
+            <div class="store-item">
+            <img src="${item.image}" alt="${item.name}" width="250">
+            <h3>${item.name}</h3>
+            <div class="discounted-price">
+            <p>$${item.price}</p>
+            <span>$${item.discountedPrice}</span>
+            </div>
+        </div>
+            `
+        }   
+        else if(item.type.toLowerCase() === 'guys' && item.discountedPrice === undefined){
+            storeItemsHtml += `
+            <div class="store-item">
+                <img src="${item.image}" alt="${item.name}" width="250">
+                <h3>${item.name}</h3>
+                <p>$${item.price}</p>
+            </div>
+            `
+            }
+        }
+        
+        mainEl.innerHTML = storeItemsHtml
+    
+})
+}
+
+function renderStoreItemsByTypeSale(){
+    let mainEl = document.querySelector('main')
+    let saleEl = document.querySelector('.sale-page')
+    saleEl?.addEventListener('click', function (){
+    let storeItems = state.storeItems
+    let storeItemsHtml = ''
+    for(let item of storeItems){
+        if(item.discountedPrice){
             storeItemsHtml += `
             <div class="store-item">
             <img src="${item.image}" alt="${item.name}" width="250">
@@ -40,9 +111,9 @@ function renderStoreItemsByType(){
         </div>
             `
         }
-        mainEl.innerHTML = storeItemsHtml
+    }
+    mainEl.innerHTML = storeItemsHtml
     })
-    
 }
 
 function getStoreItems(){
@@ -89,8 +160,15 @@ function render(){
     let mainEl = document.querySelector('main')
     mainEl.innerHTML = ''
 
+    let logoEl = document.querySelector('.the-logo')
+    logoEl?.addEventListener('click', function (){
+        renderStoreItems()
+    })
+
     renderStoreItems()
-    renderStoreItemsByType()
+    renderStoreItemsByTypeGirls()
+    renderStoreItemsByTypeGuys()
+    renderStoreItemsByTypeSale()
 }
 getStoreItems()
 render()
