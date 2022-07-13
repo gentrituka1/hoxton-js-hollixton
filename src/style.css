@@ -74,6 +74,7 @@ header nav{
 /* main area */
 
 main{
+  position: relative;
   grid-area: main;
   padding: 20px;
   display: grid;
@@ -83,6 +84,11 @@ main{
   display: grid;
   gap: 10px;
   padding: 10px;
+}
+.store-item:hover{
+  transform: scale(1.1);
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
 }
 .discounted-price{
   display: grid;
@@ -98,6 +104,33 @@ main{
 }
 .search-bar{
   cursor: pointer;
+}
+.login-form{
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+}
+.blur.active{
+  filter: blur(20px);
+  pointer-events: none;
+  user-select: none;
+}
+#popup{
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  padding: 50px;
+  box-shadow: 0 5px 30px rgba(0,0,0,0.30);
+  background: #fff;
+}
+#popup.active{
+  top: 50%;
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
 }
 /* footer area */
 

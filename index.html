@@ -9,6 +9,14 @@
   </head>
   <body>
     <script type="module" src="/src/main.ts"></script>
+    <script type="text/javascript">
+      function blurBackground(){
+        let blur = document.querySelector('.blur')
+        blur?.classList.toggle('active')
+        let popup = document.getElementById('popup')
+        popup?.classList.toggle('active')
+      }
+    </script>
 
     <header>
         <nav>
@@ -24,7 +32,7 @@
               <li><span class="material-symbols-outlined search-bar">
                 search
                 </span></li>
-              <li><span class="material-symbols-outlined log-in" onclick="javascript:window.close()">
+              <li><span class="material-symbols-outlined log-in" onclick="blurBackground()">
                 person
                 </span></li>
               <li><span class="material-symbols-outlined shopping-bag">
@@ -33,7 +41,7 @@
           </ul>
         </nav>
     </header>
-    <main>
+    <main class="blur">
 
     </main>
     <footer>
