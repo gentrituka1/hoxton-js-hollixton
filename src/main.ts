@@ -244,19 +244,51 @@ function renderStoreItems(){
 function renderSelectedItemPage(){
     let mainEl = document.querySelector('main')
     let selectedItem = state.selectedItem
+
     let divEl = document.createElement('div')
     divEl.className = 'selected-item'
+
     let imgEl = document.createElement('img')
     imgEl.src = selectedItem.image
     imgEl.alt = selectedItem.name
-    imgEl.width = 400
+    imgEl.width = 500
+
+    let infoEl = document.createElement('div')
+    infoEl.className = 'selected-item-info'
+
     let h3El = document.createElement('h3')
     h3El.innerText = selectedItem.name
+    h3El.className = 'selected-item-name'
+
+    let priceEl = document.createElement('div')
+    priceEl.className = 'selected-item-price'
+
+    
+
+    if(selectedItem.discountedPrice){
+
     let pEl = document.createElement('p')
     pEl.innerText = `$${selectedItem.price}`
+    pEl.className = 'selected-item-price-alone'
+
+    let spanEl = document.createElement('span')
+    spanEl.innerText = `$${selectedItem.discountedPrice}`
+    spanEl.className = 'selected-discounted-price'
+    priceEl.append(pEl, spanEl)
+    } else {
+        let pEl = document.createElement('p')
+        pEl.innerText = `$${selectedItem.price}`
+        pEl.className = 'selected-item-price-alone'
+        priceEl.append(pEl)
+    }
+
     let buttonEl = document.createElement('button')
     buttonEl.innerText = 'Add to Cart'
-    divEl.append(imgEl, h3El, pEl, buttonEl)
+    buttonEl.className = 'add-to-cart-button'
+
+    
+    infoEl.append(priceEl ,h3El, buttonEl)
+    divEl.append(imgEl, infoEl)
     mainEl.append(divEl)
         
 }
