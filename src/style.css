@@ -126,6 +126,11 @@ main{
   grid-template-rows: 100px 200px auto;
   align-items: start;
 }
+.recently-added{
+  color: red;
+  font-weight: bold;
+  font-size: 2rem;
+}
 .selected-item-name{
   font-size: 2.5rem;
   font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;

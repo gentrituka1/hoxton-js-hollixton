@@ -253,8 +253,12 @@ function renderSelectedItemPage(){
     imgEl.alt = selectedItem.name
     imgEl.width = 500
 
+    
+
     let infoEl = document.createElement('div')
     infoEl.className = 'selected-item-info'
+
+    
 
     let h3El = document.createElement('h3')
     h3El.innerText = selectedItem.name
@@ -263,7 +267,12 @@ function renderSelectedItemPage(){
     let priceEl = document.createElement('div')
     priceEl.className = 'selected-item-price'
 
-    
+    if(selectedItem?.dateEntered === "2021/07/10"){
+        let pEl = document.createElement('p')
+        pEl.innerText = `New!`
+        pEl.className = "recently-added"
+        priceEl.append(pEl)
+    }
 
     if(selectedItem.discountedPrice){
 
@@ -278,7 +287,6 @@ function renderSelectedItemPage(){
     } else {
         let pEl = document.createElement('p')
         pEl.innerText = `$${selectedItem.price}`
-        pEl.className = 'selected-item-price-alone'
         priceEl.append(pEl)
     }
 
