@@ -20,15 +20,17 @@ type User = {
   }
 
 type State = {
-    storeItems: StoreItem[]
+    storeItems: StoreItem[];
     byType: string;
-    users: User[]
+    users: User[];
+    isLoginVisible: boolean;
 }
 
 const state: State = {
     storeItems: [],
     byType: '',
     users: [],
+    isLoginVisible: true,
 }
 
 
@@ -210,27 +212,14 @@ function renderLogin(){
     let mainEl = document.querySelector('main')
     let loginEl = document.querySelector('.log-in')
     loginEl?.addEventListener('click', function(){
-        let loginHtml = `
-        <div class="login-form-div" id="popup">
-            <h2>Log In</h2>
-            <form class="login-form">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password">
-                <button type="submit">Log In</button>
-            </form>
-        </div>
-        `
-        mainEl.innerHTML = loginHtml
+        
     })
-
 }
 
-function blurBackground(){
-    let blur = document.querySelector('.blur')
-    blur?.classList.toggle('active')
+function renderNewPage(){
+    
 }
+
 
 function render(){
     let mainEl = document.querySelector('main')
@@ -241,12 +230,17 @@ function render(){
         renderStoreItems()
     })
 
+    
+
     renderStoreItems()
     renderStoreItemsByTypeGirls()
     renderStoreItemsByTypeGuys()
     renderStoreItemsByTypeSale()
     renderLogin()
+    
 }
+
+
 renderFilteredStoreItems()
 getStoreItems()
 render()
