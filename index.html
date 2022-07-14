@@ -9,22 +9,6 @@
   </head>
   <body>
     <script type="module" src="/src/main.ts"></script>
-    <script type="text/javascript">
-      let modal = document.getElementById('myModal');
-      let loginEl = document.querySelector('.log-in');
-      let span = document.getElementsByClassName("close")[0];
-      loginEl.onclick = function() {
-        modal.style.display = "block";
-      }
-      span.onclick = function() {
-        modal.style.display = "none";
-      }
-      window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      }
-    </script>
 
     <header>
         <nav>
@@ -40,7 +24,7 @@
               <li><span class="material-symbols-outlined search-bar">
                 search
                 </span></li>
-              <li><span class="material-symbols-outlined log-in" onclick="blurBackground()">
+              <li><span class="material-symbols-outlined log-in">
                 person
                 </span></li>
               <li><span class="material-symbols-outlined shopping-bag">

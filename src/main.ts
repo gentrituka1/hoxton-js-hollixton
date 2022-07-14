@@ -23,16 +23,25 @@ type State = {
     storeItems: StoreItem[];
     byType: string;
     users: User[];
-    isLoginVisible: boolean;
+    selectedItem: StoreItem | null
+    page: 'store' | 'item'
 }
 
 const state: State = {
     storeItems: [],
     byType: '',
     users: [],
-    isLoginVisible: true,
+    selectedItem: null,
+    page: 'store'
 }
 
+
+function selectedItem(item: StoreItem) {
+    state.selectedItem = item;
+  }
+  function deselectItem() {
+    state.selectedItem = null;
+  }
 
 function renderStoreItemsByTypeGirls(){
     let mainEl = document.querySelector('main')
@@ -178,46 +187,98 @@ function getStoreItems(){
     })
 }
 
+
 function renderStoreItems(){
     let mainEl = document.querySelector('main')
     let storeItems = state.storeItems
-    let storeItemsHtml = ''
     for(let item of storeItems){
         if(item.discountedPrice){
-            storeItemsHtml += `
-            <div class="store-item">
-            <img src="${item.image}" alt="${item.name}" width="250">
-            <h3>${item.name}</h3>
-            <div class="discounted-price">
-            <p>$${item.price}</p>
-            <span>$${item.discountedPrice}</span>
-            </div>
-        </div>
-            `
+        let divEl = document.createElement('div')
+        divEl.className = 'store-item'
+        divEl.addEventListener('click', function(){
+            state.page = 'item'
+            selectedItem(item)
+            render()
+        })
+
+        let imgEl = document.createElement('img')
+        imgEl.src = item.image
+        imgEl.alt = item.name
+        imgEl.width = 250
+        let h3El = document.createElement('h3')
+        h3El.innerText = item.name
+        let div2El = document.createElement('div')
+        div2El.className = 'discounted-price'
+        let pEl = document.createElement('p')
+        pEl.innerText = `$${item.price}`
+        let spanEl = document.createElement('span')
+        spanEl.innerText = `$${item.discountedPrice}`
+        div2El.append(pEl, spanEl)
+        divEl.append(imgEl, h3El, div2El)
+        mainEl.append(divEl)
         }
         else {
-            storeItemsHtml += `
-            <div class="store-item">
-                <img src="${item.image}" alt="${item.name}" width="250">
-                <h3>${item.name}</h3>
-                <p>$${item.price}</p>
-            </div>
-        `
+
+        let divEl = document.createElement('div')
+        divEl.className = 'store-item'
+        divEl.addEventListener('click', function(){
+            state.page = 'item'
+            selectedItem(item)
+            render()
+        })
+        let imgEl = document.createElement('img')
+        imgEl.src = item.image
+        imgEl.alt = item.name
+        imgEl.width = 250
+        let h3El = document.createElement('h3')
+        h3El.innerText = item.name
+        let pEl = document.createElement('p')
+        pEl.innerText = `$${item.price}`
+        divEl.append(imgEl, h3El, pEl)
+        mainEl.append(divEl)
         }
     }
-    mainEl.innerHTML = storeItemsHtml
+    state.page = 'store'
+}
+
+function renderSelectedItemPage(){
+    let mainEl = document.querySelector('main')
+    let selectedItem = state.selectedItem
+    let divEl = document.createElement('div')
+    divEl.className = 'selected-item'
+    let imgEl = document.createElement('img')
+    imgEl.src = selectedItem.image
+    imgEl.alt = selectedItem.name
+    imgEl.width = 400
+    let h3El = document.createElement('h3')
+    h3El.innerText = selectedItem.name
+    let pEl = document.createElement('p')
+    pEl.innerText = `$${selectedItem.price}`
+    let buttonEl = document.createElement('button')
+    buttonEl.innerText = 'Add to Cart'
+    divEl.append(imgEl, h3El, pEl, buttonEl)
+    mainEl.append(divEl)
+        
 }
 
 function renderLogin(){
     let mainEl = document.querySelector('main')
     let loginEl = document.querySelector('.log-in')
     loginEl?.addEventListener('click', function(){
-        
+        let loginHtml = `
+        <div class="login-form">
+        <h2>Log In</h2>
+        <form>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password">
+        <button type="submit">Log In</button>
+        </form>
+        </div>
+        `
+        mainEl.innerHTML = loginHtml
     })
-}
-
-function renderNewPage(){
-    
 }
 
 
@@ -225,21 +286,27 @@ function render(){
     let mainEl = document.querySelector('main')
     mainEl.innerHTML = ''
 
-    let logoEl = document.querySelector('.the-logo')
-    logoEl?.addEventListener('click', function (){
-        renderStoreItems()
-    })
+   
 
-    
+    if(state.page === 'item'){
+        renderSelectedItemPage()
+    } else{
 
     renderStoreItems()
     renderStoreItemsByTypeGirls()
     renderStoreItemsByTypeGuys()
     renderStoreItemsByTypeSale()
     renderLogin()
-    
+    }
 }
 
+
+let logoEl = document.querySelector('.the-logo')
+logoEl?.addEventListener('click', function (){
+    deselectItem()
+    state.page = 'store'
+    render()
+})
 
 renderFilteredStoreItems()
 getStoreItems()
