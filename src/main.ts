@@ -22,8 +22,9 @@ type User = {
 type State = {
     storeItems: StoreItem[];
     users: User[];
+    searchTerm: string;
     selectedItem: StoreItem | null
-    page: 'store' | 'item'
+    page: 'store' | 'item' | 'filtered'
     modal: 'search' | 'login' | 'bag' | ''
     cart: StoreItem[]
 }
@@ -31,11 +32,23 @@ type State = {
 const state: State = {
     storeItems: [],
     users: [],
+    searchTerm: "",
     selectedItem: null,
     modal: '',
     page: 'store',
     cart: []
 }
+
+function renderFilteredItems() {
+    // find items with this name
+    // put them in the state
+    // rerender
+
+    let filteredItems = state.storeItems.filter(item => {
+        return item.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+    })
+    return filteredItems
+  }
 
 function renderSearchModal () {
     let mainEl = document.querySelector('main')
@@ -64,16 +77,14 @@ function renderSearchModal () {
     formEl.className = 'search-form'
     formEl.addEventListener('submit', function (event) {
         event.preventDefault()
-        let filteredItems = state.storeItems.filter(item => 
-            item.name.toLowerCase().includes(inputEl.value.toLowerCase())
-            )
-        state.storeItems = filteredItems
+        state.searchTerm = inputEl.value
+        state.page = 'filtered'
         state.modal = ''
         render()
     })
-    
 
-  
+
+
     let inputEl = document.createElement('input')
     inputEl.placeholder = 'Search...'
     inputEl.className = 'search-input'
@@ -349,8 +360,7 @@ function getStoreItems(){
 
 function renderStoreItems(){
     let mainEl = document.querySelector('main')
-    let storeItems = state.storeItems
-    for(let item of storeItems){
+    for(let item of renderFilteredItems()){
         if(item.discountedPrice){
         let divEl = document.createElement('div')
         divEl.className = 'store-item'
@@ -397,7 +407,6 @@ function renderStoreItems(){
         mainEl.append(divEl)
         }
     }
-    state.page = 'store'
 }
 
 function renderSelectedItemPage(){
@@ -513,6 +522,8 @@ let logoEl = document.querySelector('.the-logo')
     logoEl?.addEventListener('click', function (){
     deselectItem()
     state.page = 'store'
+    state.modal = ""
+    state.searchTerm = ""
     render()
 })
 
