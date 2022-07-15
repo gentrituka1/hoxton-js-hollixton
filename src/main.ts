@@ -21,22 +21,20 @@ type User = {
 
 type State = {
     storeItems: StoreItem[];
-    byType: string;
     users: User[];
     selectedItem: StoreItem | null
     page: 'store' | 'item'
-    filter: string
     modal: 'search' | 'login' | 'bag' | ''
+    cart: StoreItem[]
 }
 
 const state: State = {
     storeItems: [],
-    byType: '',
     users: [],
     selectedItem: null,
     modal: '',
-    filter: 'short',
-    page: 'store'
+    page: 'store',
+    cart: []
 }
 
 function renderSearchModal () {
@@ -63,16 +61,23 @@ function renderSearchModal () {
     titleEl.textContent = 'Search for your favourite items!'
   
     let formEl = document.createElement('form')
+    formEl.className = 'search-form'
     formEl.addEventListener('submit', function (event) {
-      event.preventDefault()
-        state.filter = inputEl.value
+        event.preventDefault()
+        let filteredItems = state.storeItems.filter(item => 
+            item.name.toLowerCase().includes(inputEl.value.toLowerCase())
+            )
+        state.storeItems = filteredItems
         state.modal = ''
         render()
     })
+    
+
   
     let inputEl = document.createElement('input')
     inputEl.placeholder = 'Search...'
     inputEl.className = 'search-input'
+
 
     formEl.append(inputEl)
     divEl.append(titleEl, formEl)
@@ -180,9 +185,53 @@ function renderBagModal () {
       render()
     })
   
+    let ItemBag = document.createElement('h2')
+    ItemBag.textContent = 'Your Item Bag:'
+  
+    let items = document.createElement('ul')
+    items.className = 'item-bag'
+
+    for(let item of state.cart) {
+        let itemEl = document.createElement('li')
+
+        let itemImg = document.createElement('img')
+        itemImg.src = item.image
+        
+        let itemName = document.createElement('h3')
+        itemName.textContent = item.name
+
+        if(item.discountedPrice){
+
+        let divEl = document.createElement('div')
+        divEl.className = 'discounted-price'
+            
+        let itemPrice = document.createElement('p')
+        itemPrice.textContent = `$${item.price}`
+
+        let itemDiscount = document.createElement('p')
+        itemDiscount.textContent = `$${item.discountedPrice}`
+
+        divEl.append(itemPrice, itemDiscount)
+        itemEl.append(itemImg, itemName, divEl)
+        } 
+        else{
+            let itemPrice = document.createElement('p')
+            itemPrice.textContent = `$${item.price}`
+
+            itemEl.append(itemImg, itemName, itemPrice)
+        }
+
+        let removeButton = document.createElement('button')
+        removeButton.textContent = 'Remove'
+        removeButton.addEventListener('click', function () {
+            state.cart.splice(state.cart.indexOf(item), 1)
+            render()
+        })
+        
+        items.append(itemEl)
+    }
     
-    
-    containerEl.append(closeButton, bagEl)
+    containerEl.append(closeButton, ItemBag,)
     wrapperEl.append(containerEl)
     mainEl.append(wrapperEl)
 }
@@ -404,7 +453,7 @@ function renderSelectedItemPage(){
     buttonEl.innerText = 'Add to Cart'
     buttonEl.className = 'add-to-cart-button'
     buttonEl.addEventListener('click', function(){
-        addToCart(selectedItem)
+        addtoCart(selectedItem)
         render()
     })
 
@@ -415,11 +464,22 @@ function renderSelectedItemPage(){
         
 }
 
-
+function addtoCart(){
+    if(state.selectedItem !== null)
+    state.cart.push(state.selectedItem)
+    render()
+}
 
 function render(){
     let mainEl = document.querySelector('main')
     mainEl.innerHTML = ''
+
+    let logoEl = document.querySelector('.the-logo')
+    logoEl?.addEventListener('click', function (){
+    deselectItem()
+    state.page = 'store'
+    render()
+})
 
     let searchEl = document.querySelector('.search-bar')
     searchEl.addEventListener('click', function(){
@@ -455,14 +515,8 @@ function render(){
 }
 
 
-let logoEl = document.querySelector('.the-logo')
-logoEl?.addEventListener('click', function (){
-    deselectItem()
-    state.page = 'store'
-    render()
-})
+
 
 getStoreItems()
 render()
-
 
