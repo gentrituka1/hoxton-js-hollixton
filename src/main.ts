@@ -474,12 +474,7 @@ function render(){
     let mainEl = document.querySelector('main')
     mainEl.innerHTML = ''
 
-    let logoEl = document.querySelector('.the-logo')
-    logoEl?.addEventListener('click', function (){
-    deselectItem()
-    state.page = 'store'
-    render()
-})
+    
 
     let searchEl = document.querySelector('.search-bar')
     searchEl.addEventListener('click', function(){
@@ -514,7 +509,12 @@ function render(){
     }
 }
 
-
+let logoEl = document.querySelector('.the-logo')
+    logoEl?.addEventListener('click', function (){
+    deselectItem()
+    state.page = 'store'
+    render()
+})
 
 
 getStoreItems()
