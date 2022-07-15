@@ -163,6 +163,63 @@ main{
   background: -webkit-linear-gradient(top right, #0072ff, #00c6ff);
   cursor: pointer;
 }
+
+/* modal area */
+
+.modal-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.237);
+  /* backdrop-filter: blur(5px) grayscale(100%); */
+
+
+  padding: 2rem;
+
+  display: grid;
+  place-content: center;
+}
+
+.modal-container {
+  background-color: white;
+  padding: 3rem;
+  position: relative;
+  border-radius: 8px;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+.modal-search{
+  display: grid;
+  grid-gap: 20px;
+  place-items: center;
+}
+.modal-search h2{
+  font-size: 2rem;
+  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: rgb(3, 38, 141);
+}
+.modal-search input{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid royalblue;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
 /* footer area */
 
 footer{

@@ -25,6 +25,8 @@ type State = {
     users: User[];
     selectedItem: StoreItem | null
     page: 'store' | 'item'
+    filter: string
+    modal: 'search' | 'login' | 'bag' | ''
 }
 
 const state: State = {
@@ -32,9 +34,121 @@ const state: State = {
     byType: '',
     users: [],
     selectedItem: null,
+    modal: '',
+    filter: 'short',
     page: 'store'
 }
 
+function renderSearchModal () {
+    let mainEl = document.querySelector('main')
+
+    let wrapperEl = document.createElement('div')
+    wrapperEl.className = 'modal-wrapper'
+  
+    let containerEl = document.createElement('div')
+    containerEl.className = 'modal-container'
+  
+    let closeButton = document.createElement('button')
+    closeButton.textContent = 'X'
+    closeButton.className = 'modal-close-button'
+    closeButton.addEventListener('click', function () {
+      state.modal = ''
+      render()
+    })
+
+    let divEl = document.createElement('div')
+    divEl.className = 'modal-search'
+  
+    let titleEl = document.createElement('h2')
+    titleEl.textContent = 'Search for your favourite items!'
+  
+    let formEl = document.createElement('form')
+    formEl.addEventListener('submit', function (event) {
+      event.preventDefault()
+        state.filter = inputEl.value
+        state.modal = ''
+        render()
+    })
+  
+    let inputEl = document.createElement('input')
+    formEl.append(inputEl)
+    divEl.append(titleEl, formEl)
+    containerEl.append(closeButton, divEl)
+    wrapperEl.append(containerEl)
+    mainEl.append(wrapperEl)
+  }
+  
+  function renderProfileModal () {
+    let mainEl = document.querySelector('main')
+
+    let wrapperEl = document.createElement('div')
+    wrapperEl.className = 'modal-wrapper'
+  
+    let containerEl = document.createElement('div')
+    containerEl.className = 'modal-container'
+  
+    let closeButton = document.createElement('button')
+    closeButton.textContent = 'X'
+    closeButton.className = 'modal-close-button'
+    closeButton.addEventListener('click', function () {
+      state.modal = ''
+      render()
+    })
+  
+    let titleEl = document.createElement('h2')
+    titleEl.textContent = 'Register'
+  
+    let formEl = document.createElement('form')
+    formEl.addEventListener('register', function (event) {
+      event.preventDefault()
+  
+      state.filter = inputEl.value
+      state.modal = ''
+      
+      render()
+    })
+    
+    let name = document.createElement('a')
+    name.textContent = 'Your Name:'
+    let inputEl = document.createElement('input')
+    formEl.append(inputEl)
+    
+  
+  
+    containerEl.append(closeButton, titleEl, name, formEl,)
+    wrapperEl.append(containerEl)
+    mainEl.append(wrapperEl)
+  }
+
+  function renderBagModal () {
+    let mainEl = document.querySelector('main')
+
+    let wrapperEl = document.createElement('div')
+    wrapperEl.className = 'modal-wrapper'
+  
+    let containerEl = document.createElement('div')
+    containerEl.className = 'modal-container'
+  
+    let closeButton = document.createElement('button')
+    closeButton.textContent = 'X'
+    closeButton.className = 'modal-close-button'
+    closeButton.addEventListener('click', function () {
+      state.modal = ''
+      render()
+    })
+  
+    let ItemBag = document.createElement('h2')
+    ItemBag.textContent = 'Your Item Bag:'
+  
+    let Items = document.createElement('img')
+    Items.textContent = '$storeListUl'
+    let ItemList = document.createElement('a')
+    ItemList.textContent = 'Your Item Bag:'
+    
+    containerEl.append(closeButton, ItemBag, Items,)
+    wrapperEl.append(containerEl)
+    mainEl.append(wrapperEl)
+  }
 
 function selectedItem(item: StoreItem) {
     state.selectedItem = item;
@@ -137,47 +251,10 @@ function renderStoreItemsByTypeSale(){
     })
 }
 
-function renderFilteredStoreItems(){
-    let mainEl = document.querySelector('main')
-    let searchEl = document.querySelector('.search-bar')
-    searchEl?.addEventListener('click', function(){
-        let searchInputEl = document.createElement('input')
-        searchInputEl.type = 'text';
-        searchInputEl.placeholder = 'Search the item name';
-        searchInputEl.className = 'search-input'
-        searchEl?.appendChild(searchInputEl)
-        searchInputEl.addEventListener('keyup', function(){
-            let searchInput = searchInputEl.value.toLowerCase()
-            let storeItems = state.storeItems
-            let storeItemsHtml = ''
-            for(let item of storeItems){
-                if(item.name.toLowerCase().includes(searchInput) && item.discountedPrice){
-                    storeItemsHtml += `
-                    <div class="store-item">
-                    <img src="${item.image}" alt="${item.name}" width="250">
-                    <h3>${item.name}</h3>
-                    <div class="discounted-price">
-                    <p>$${item.price}</p>
-                    <span>$${item.discountedPrice}</span>
-                    </div>
-                </div>
-                    `
-                } else if(item.name.toLowerCase().includes(searchInput) && item.discountedPrice === undefined){
-                    storeItemsHtml += `
-                    <div class="store-item">
-                        <img src="${item.image}" alt="${item.name}" width="250">
-                        <h3>${item.name}</h3>
-                        <p>$${item.price}</p>
-                    </div>
-                    `
-                    }
-                }
-            
-            mainEl.innerHTML = storeItemsHtml
-        })
-}, {once : true})
-
+function renderFilteredStoreItemsBySearch(){
+    
 }
+
 function getStoreItems(){
     fetch('http://localhost:3001/store')
     .then(res => res.json())
@@ -326,7 +403,27 @@ function render(){
     let mainEl = document.querySelector('main')
     mainEl.innerHTML = ''
 
-   
+    let searchEl = document.querySelector('.search-bar')
+    searchEl.addEventListener('click', function(){
+        state.modal = 'search'
+        render()
+    })
+
+    let loginEl = document.querySelector('.log-in')
+    loginEl.addEventListener('click', function(){
+        state.modal = 'login'
+        render()
+    })
+
+    let bagEl = document.querySelector('.shopping-bag')
+    bagEl.addEventListener('click', function(){
+        state.modal = 'bag'
+        render()
+    })
+
+    if (state.modal === 'search') renderSearchModal()
+    if (state.modal === 'login') renderProfileModal()
+    if (state.modal === 'bag') renderBagModal()
 
     if(state.page === 'item'){
         renderSelectedItemPage()
@@ -336,7 +433,6 @@ function render(){
     renderStoreItemsByTypeGirls()
     renderStoreItemsByTypeGuys()
     renderStoreItemsByTypeSale()
-    renderLogin()
     }
 }
 
@@ -348,7 +444,7 @@ logoEl?.addEventListener('click', function (){
     render()
 })
 
-renderFilteredStoreItems()
+// renderFilteredStoreItems()
 getStoreItems()
 render()
 
