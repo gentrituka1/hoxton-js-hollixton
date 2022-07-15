@@ -105,12 +105,13 @@ main{
 .search-bar{
   cursor: pointer;
 }
-.login-form{
-  padding-top: 20px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 20px;
+.log-in{
+  cursor: pointer;
 }
+.shopping-bag{
+  cursor: pointer;
+}
+
 
 /* item page */
 
@@ -185,17 +186,23 @@ main{
 }
 
 .modal-container {
-  background-color: white;
+  background-color: lightcyan;
   padding: 3rem;
   position: relative;
-  border-radius: 8px;
+  border-radius: 20px;
+  display: grid;
+  gap: 40px;
+  place-items: center;
 }
 
 .modal-close-button {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: -1px;
+  right: -1px;
+  border: unset;
   border-radius: 50%;
+  background-color: black;
+  color: white;
   height: 50px;
   width: 50px;
   cursor: pointer;
@@ -217,6 +224,28 @@ main{
   border-radius: 20px;
   font-size: 1.2rem;
   font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.register-form{
+  display: grid;
+  place-items: center;
+  grid-gap: 15px;
+  font-size: 1.2rem;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: royalblue;
+}
+.submit-button{
+
+  all: unset;
+  border: 1px solid royalblue;
+  border-radius: 20px;
+  width: 50%;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background: -webkit-linear-gradient(top right, #0072ff, #00c6ff);
+  cursor: pointer;
+  color: white;
 }
 
 

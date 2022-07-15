@@ -71,14 +71,21 @@ function renderSearchModal () {
     })
   
     let inputEl = document.createElement('input')
+    inputEl.placeholder = 'Search...'
+    inputEl.className = 'search-input'
+
     formEl.append(inputEl)
     divEl.append(titleEl, formEl)
     containerEl.append(closeButton, divEl)
     wrapperEl.append(containerEl)
     mainEl.append(wrapperEl)
   }
+
+function renderFilteredItemsBySearch(){
+    state.filter
+}
   
-  function renderProfileModal () {
+function renderProfileModal () {
     let mainEl = document.querySelector('main')
 
     let wrapperEl = document.createElement('div')
@@ -99,28 +106,64 @@ function renderSearchModal () {
     titleEl.textContent = 'Register'
   
     let formEl = document.createElement('form')
-    formEl.addEventListener('register', function (event) {
-      event.preventDefault()
-  
-      state.filter = inputEl.value
-      state.modal = ''
-      
-      render()
+    formEl.className = 'register-form'
+    formEl.addEventListener('submit', function () {
+        fetch('http://localhost:3001/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstName: inputFirstNameEl.value,
+                lastName: inputLastNameEl.value,
+                id: inputIdEl.value,
+                password: inputPasswordEl.value,
+                bag: []
+        })
+    }).then(response => response.json())
+    .then(user => {
+        state.users.push(user)
+        state.modal = ''
+        render()
     })
+})
     
-    let name = document.createElement('a')
-    name.textContent = 'Your Name:'
-    let inputEl = document.createElement('input')
-    formEl.append(inputEl)
+    let firstName = document.createElement('a')
+    firstName.textContent = 'Your First Name:'
+    let inputFirstNameEl = document.createElement('input')
+    inputFirstNameEl.placeholder = 'First Name...'
+    inputFirstNameEl.className = 'search-input'
+
+    let lastName = document.createElement('a')
+    lastName.textContent = 'Your Last Name:'
+    let inputLastNameEl = document.createElement('input')
+    inputLastNameEl.placeholder = 'Last Name...'
+    inputLastNameEl.className = 'search-input'
+
+    let id = document.createElement('a')
+    id.textContent = 'Your Email:'
+    let inputIdEl = document.createElement('input')
+    inputIdEl.placeholder = 'Email...'
+    inputIdEl.className = 'search-input'
+
+    let password = document.createElement('a')
+    password.textContent = 'Your Password:'
+    let inputPasswordEl = document.createElement('input')
+    inputPasswordEl.placeholder = 'Password...'
+    inputPasswordEl.className = 'search-input'
+
+    let submitButton = document.createElement('button')
+    submitButton.textContent = 'Register'
+    submitButton.className = 'submit-button'
     
   
-  
-    containerEl.append(closeButton, titleEl, name, formEl,)
+    formEl.append(firstName, inputFirstNameEl, lastName, inputLastNameEl, id, inputIdEl, password, inputPasswordEl, submitButton)
+    containerEl.append(closeButton, titleEl, formEl)
     wrapperEl.append(containerEl)
     mainEl.append(wrapperEl)
   }
 
-  function renderBagModal () {
+function renderBagModal () {
     let mainEl = document.querySelector('main')
 
     let wrapperEl = document.createElement('div')
@@ -148,14 +191,15 @@ function renderSearchModal () {
     containerEl.append(closeButton, ItemBag, Items,)
     wrapperEl.append(containerEl)
     mainEl.append(wrapperEl)
-  }
+}
 
 function selectedItem(item: StoreItem) {
     state.selectedItem = item;
-  }
-  function deselectItem() {
+}
+
+function deselectItem() {
     state.selectedItem = null;
-  }
+}
 
 function renderStoreItemsByTypeGirls(){
     let mainEl = document.querySelector('main')
@@ -251,10 +295,6 @@ function renderStoreItemsByTypeSale(){
     })
 }
 
-function renderFilteredStoreItemsBySearch(){
-    
-}
-
 function getStoreItems(){
     fetch('http://localhost:3001/store')
     .then(res => res.json())
@@ -263,7 +303,6 @@ function getStoreItems(){
         render()
     })
 }
-
 
 function renderStoreItems(){
     let mainEl = document.querySelector('main')
@@ -378,25 +417,6 @@ function renderSelectedItemPage(){
         
 }
 
-function renderLogin(){
-    let mainEl = document.querySelector('main')
-    let loginEl = document.querySelector('.log-in')
-    loginEl?.addEventListener('click', function(){
-        let loginHtml = `
-        <div class="login-form">
-        <h2>Log In</h2>
-        <form>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Email">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Password">
-        <button type="submit">Log In</button>
-        </form>
-        </div>
-        `
-        mainEl.innerHTML = loginHtml
-    })
-}
 
 
 function render(){
@@ -444,7 +464,6 @@ logoEl?.addEventListener('click', function (){
     render()
 })
 
-// renderFilteredStoreItems()
 getStoreItems()
 render()
 
