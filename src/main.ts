@@ -50,6 +50,8 @@ function renderFilteredItems() {
     return filteredItems
   }
 
+
+
 function renderSearchModal () {
     let mainEl = document.querySelector('main')
 
@@ -177,7 +179,9 @@ function renderProfileModal () {
     mainEl.append(wrapperEl)
   }
 
-
+function addToBag(){
+    state.cart.push(state.selectedItem)
+}
 
 function renderBagModal () {
     let mainEl = document.querySelector('main')
@@ -197,52 +201,62 @@ function renderBagModal () {
     })
   
     let ItemBag = document.createElement('h2')
-    ItemBag.textContent = 'Your Item Bag:'
+    ItemBag.textContent = 'Bag'
   
     let items = document.createElement('ul')
     items.className = 'item-bag'
 
-    for(let item of state.cart) {
+    for(let item of state.cart){
         let itemEl = document.createElement('li')
+        itemEl.className = 'item-bag-item'
 
-        let itemImg = document.createElement('img')
-        itemImg.src = item.image
-        
+        let itemImage = document.createElement('img')
+        itemImage.src = item.image
+        itemImage.className = 'item-image'
+        itemImage.width = 70
+
+        let itemDiv = document.createElement('div')
+        itemDiv.className = 'item-div'
+
+        let itemDiv2 = document.createElement('div')
+        itemDiv2.className = 'item-div2'
+
         let itemName = document.createElement('h3')
         itemName.textContent = item.name
+        itemName.className = 'item-name'
+
 
         if(item.discountedPrice){
-
-        let divEl = document.createElement('div')
-        divEl.className = 'discounted-price'
-            
-        let itemPrice = document.createElement('p')
-        itemPrice.textContent = `$${item.price}`
-
-        let itemDiscount = document.createElement('p')
-        itemDiscount.textContent = `$${item.discountedPrice}`
-
-        divEl.append(itemPrice, itemDiscount)
-        itemEl.append(itemImg, itemName, divEl)
-        } 
-        else{
-            let itemPrice = document.createElement('p')
+            let itemPrice = document.createElement('h4')
             itemPrice.textContent = `$${item.price}`
+            itemPrice.className = 'item-price'
 
-            itemEl.append(itemImg, itemName, itemPrice)
+            let itemDiscount = document.createElement('h4')
+            itemDiscount.textContent = `$${item.discountedPrice}`
+            itemDiscount.className = 'item-discount'
+
+            itemDiv.append(itemName ,itemPrice, itemDiscount)
+        } else{
+            let itemPrice = document.createElement('h4')
+            itemPrice.textContent = `$${item.price}`
+            itemPrice.className = 'item-price'
+            itemDiv.append(itemName, itemPrice)
         }
 
-        let removeButton = document.createElement('button')
-        removeButton.textContent = 'Remove'
-        removeButton.addEventListener('click', function () {
+        let itemButton = document.createElement('button')
+        itemButton.textContent = 'Remove'
+        itemButton.className = 'item-remove'
+        itemButton.addEventListener('click', function(){
             state.cart.splice(state.cart.indexOf(item), 1)
             render()
         })
-        
+        itemDiv.append(itemButton)
+        itemDiv2.append(itemDiv)
+        itemEl.append(itemImage, itemDiv2)
         items.append(itemEl)
     }
-    
-    containerEl.append(closeButton, ItemBag,)
+
+    containerEl.append(closeButton, ItemBag, items)
     wrapperEl.append(containerEl)
     mainEl.append(wrapperEl)
 }
@@ -462,7 +476,7 @@ function renderSelectedItemPage(){
     buttonEl.innerText = 'Add to Cart'
     buttonEl.className = 'add-to-cart-button'
     buttonEl.addEventListener('click', function(){
-        addtoCart(selectedItem)
+        addtoCart()
         render()
     })
 

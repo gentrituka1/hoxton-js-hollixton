@@ -3,60 +3,59 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
+body {
   height: 100vh;
   display: grid;
-  grid-template: 
-  'header' auto
-  'main' 1fr
-  'footer' 1fr/
-  1fr;
+  grid-template:
+    "header" auto
+    "main" 1fr
+    "footer" 1fr/
+    1fr;
 }
 
 /* header area */
 
-header{
+header {
   grid-area: header;
   padding: 10px;
   background-color: antiquewhite;
 }
 
-.the-logo{
+.the-logo {
   text-decoration: none;
   color: royalblue;
   font-size: 1.5em;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   cursor: pointer;
 }
 
-header nav{
+header nav {
   display: grid;
   grid-auto-flow: column;
-  
 }
 
-.left-side-nav{
+.left-side-nav {
   display: grid;
   grid-template-columns: auto 1fr;
 }
 
-.left-side-nav-links{
+.left-side-nav-links {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
 }
-.left-side-nav-links li{
+.left-side-nav-links li {
   list-style: none;
 }
-.left-side-nav-links a{
+.left-side-nav-links a {
   text-decoration: none;
   color: blue;
   font-size: 1.2rem;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
-.right-side-nav{
+.right-side-nav {
   display: grid;
   grid-auto-flow: column;
   justify-content: end;
@@ -64,95 +63,93 @@ header nav{
   gap: 50px;
 }
 
-.right-side-nav li{
+.right-side-nav li {
   list-style: none;
 }
-.right-side-nav li span{
-  font-size: 1.6rem; 
+.right-side-nav li span {
+  font-size: 1.6rem;
 }
 
 /* main area */
 
-main{
+main {
   position: relative;
   grid-area: main;
   padding: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
-.store-item{
+.store-item {
   display: grid;
   gap: 10px;
   padding: 10px;
 }
-.store-item:hover{
+.store-item:hover {
   transform: scale(1.1);
   transition: all 0.5s ease-in-out;
   cursor: pointer;
 }
-.discounted-price{
+.discounted-price {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 10px;
 }
-.discounted-price p{
+.discounted-price p {
   text-decoration-line: line-through;
 }
-.discounted-price span{
+.discounted-price span {
   color: red;
   font-weight: bold;
 }
-.search-bar{
+.search-bar {
   cursor: pointer;
 }
-.log-in{
+.log-in {
   cursor: pointer;
 }
-.shopping-bag{
+.shopping-bag {
   cursor: pointer;
 }
-
 
 /* item page */
 
-.selected-item{
+.selected-item {
   padding: 30px;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 70px;
 }
-.selected-item-info{
+.selected-item-info {
   padding-top: 50px;
   display: grid;
   grid-template-rows: 100px 200px auto;
   align-items: start;
 }
-.recently-added{
+.recently-added {
   color: red;
   font-weight: bold;
   font-size: 2rem;
 }
-.selected-item-name{
+.selected-item-name {
   font-size: 2.5rem;
-  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Haettenschweiler, "Arial Narrow Bold", sans-serif;
   color: royalblue;
 }
-.selected-discounted-price{
+.selected-discounted-price {
   color: red;
-  
 }
-.selected-item-price{
+.selected-item-price {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 20px;
   font-size: 2rem;
-  font-family:'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
 }
-.selected-item-price-alone{
+.selected-item-price-alone {
   text-decoration-line: line-through;
 }
-.add-to-cart-button{
+.add-to-cart-button {
   all: unset;
   border: 1px solid royalblue;
   border-radius: 20px;
@@ -160,7 +157,7 @@ main{
   text-align: center;
   padding: 10px;
   font-size: 1.2rem;
-  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   background: -webkit-linear-gradient(top right, #0072ff, #00c6ff);
   cursor: pointer;
 }
@@ -177,7 +174,6 @@ main{
 
   background-color: rgba(0, 0, 0, 0.237);
   /* backdrop-filter: blur(5px) grayscale(100%); */
-
 
   padding: 2rem;
 
@@ -207,34 +203,33 @@ main{
   width: 50px;
   cursor: pointer;
 }
-.modal-search{
+.modal-search {
   display: grid;
   grid-gap: 20px;
   place-items: center;
 }
-.modal-search h2{
+.modal-search h2 {
   font-size: 2rem;
-  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   color: rgb(3, 38, 141);
 }
-.modal-search input{
+.modal-search input {
   width: 100%;
   padding: 10px;
   border: 1px solid royalblue;
   border-radius: 20px;
   font-size: 1.2rem;
-  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
-.register-form{
+.register-form {
   display: grid;
   place-items: center;
   grid-gap: 15px;
   font-size: 1.2rem;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   color: royalblue;
 }
-.submit-button{
-
+.submit-button {
   all: unset;
   border: 1px solid royalblue;
   border-radius: 20px;
@@ -242,31 +237,55 @@ main{
   text-align: center;
   padding: 10px;
   font-size: 1.2rem;
-  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   background: -webkit-linear-gradient(top right, #0072ff, #00c6ff);
   cursor: pointer;
   color: white;
 }
 
+/* bag area */
+
+.item-div {
+  display: grid;
+  grid-gap: 10px;
+}
+.item-div button {
+  all: unset;
+  border: 1px solid royalblue;
+  border-radius: 20px;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  background-color: white;
+  color: royalblue;
+  font-weight: bold;
+  cursor: pointer;
+}
+.item-bag-item {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 20px;
+}
 
 /* footer area */
 
-footer{
+footer {
   grid-area: footer;
   padding: 20px;
-  
+
   display: grid;
   grid-auto-flow: column;
   background-color: rgba(110, 109, 109, 0.308);
   align-items: center;
 }
-.footer-left{
+.footer-left {
   display: grid;
   justify-content: start;
   font-size: 0.8rem;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
-.footer-right{
+.footer-right {
   display: grid;
   grid-auto-flow: column;
   justify-content: end;
