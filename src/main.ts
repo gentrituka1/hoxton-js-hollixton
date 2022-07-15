@@ -81,9 +81,6 @@ function renderSearchModal () {
     mainEl.append(wrapperEl)
   }
 
-function renderFilteredItemsBySearch(){
-    state.filter
-}
   
 function renderProfileModal () {
     let mainEl = document.querySelector('main')
@@ -107,7 +104,8 @@ function renderProfileModal () {
   
     let formEl = document.createElement('form')
     formEl.className = 'register-form'
-    formEl.addEventListener('submit', function () {
+    formEl.addEventListener('submit', function (event) {
+        event.preventDefault()
         fetch('http://localhost:3001/users', {
             method: 'POST',
             headers: {
@@ -163,6 +161,8 @@ function renderProfileModal () {
     mainEl.append(wrapperEl)
   }
 
+
+
 function renderBagModal () {
     let mainEl = document.querySelector('main')
 
@@ -180,15 +180,9 @@ function renderBagModal () {
       render()
     })
   
-    let ItemBag = document.createElement('h2')
-    ItemBag.textContent = 'Your Item Bag:'
-  
-    let Items = document.createElement('img')
-    Items.textContent = '$storeListUl'
-    let ItemList = document.createElement('a')
-    ItemList.textContent = 'Your Item Bag:'
     
-    containerEl.append(closeButton, ItemBag, Items,)
+    
+    containerEl.append(closeButton, bagEl)
     wrapperEl.append(containerEl)
     mainEl.append(wrapperEl)
 }
@@ -409,6 +403,10 @@ function renderSelectedItemPage(){
     let buttonEl = document.createElement('button')
     buttonEl.innerText = 'Add to Cart'
     buttonEl.className = 'add-to-cart-button'
+    buttonEl.addEventListener('click', function(){
+        addToCart(selectedItem)
+        render()
+    })
 
     
     infoEl.append(priceEl ,h3El, buttonEl)

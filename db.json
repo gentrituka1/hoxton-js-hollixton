@@ -130,6 +130,13 @@
       "id": "paola@email.com",
       "password": "paola",
       "bag": []
+    },
+    {
+      "firstName": "gentri",
+      "lastName": "uka",
+      "id": "gerge",
+      "password": "123456",
+      "bag": []
     }
   ]
 }
