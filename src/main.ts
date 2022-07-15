@@ -179,10 +179,6 @@ function renderProfileModal () {
     mainEl.append(wrapperEl)
   }
 
-function addToBag(){
-    state.cart.push(state.selectedItem)
-}
-
 function renderBagModal () {
     let mainEl = document.querySelector('main')
 

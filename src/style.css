@@ -244,10 +244,19 @@ main {
 }
 
 /* bag area */
+.item-bag{
+  display: grid;
+  grid-gap: 30px;
+}
 
 .item-div {
   display: grid;
   grid-gap: 10px;
+  place-items: start;
+}
+.item-div2{
+  display: grid;
+  place-items: start;
 }
 .item-div button {
   all: unset;
