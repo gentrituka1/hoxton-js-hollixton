@@ -249,16 +249,25 @@ main {
   grid-gap: 30px;
 }
 
+.item-price{
+  text-decoration-line: line-through;
+}
+.item-discount{
+  color: red;
+}
+
 .item-div {
   display: grid;
+  grid-auto-flow: column;
   grid-gap: 10px;
   place-items: start;
 }
 .item-div2{
   display: grid;
+  grid-gap: 10px;
   place-items: start;
 }
-.item-div button {
+.item-div2 button{
   all: unset;
   border: 1px solid royalblue;
   border-radius: 20px;
@@ -275,6 +284,19 @@ main {
   display: grid;
   grid-auto-flow: column;
   grid-gap: 20px;
+  justify-content: start;
+}
+.total-button{
+  all: unset;
+  border: 1px solid royalblue;
+  border-radius: 20px;
+  text-align: center;
+  padding: 10px;
+  font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  background-color: royalblue;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* footer area */

@@ -27,6 +27,7 @@ type State = {
     page: 'store' | 'item' | 'filtered'
     modal: 'search' | 'login' | 'bag' | ''
     cart: StoreItem[]
+    total: number
 }
 
 const state: State = {
@@ -36,7 +37,8 @@ const state: State = {
     selectedItem: null,
     modal: '',
     page: 'store',
-    cart: []
+    cart: [],
+    total: 0
 }
 
 function renderFilteredItems() {
@@ -231,12 +233,12 @@ function renderBagModal () {
             itemDiscount.textContent = `$${item.discountedPrice}`
             itemDiscount.className = 'item-discount'
 
-            itemDiv.append(itemName ,itemPrice, itemDiscount)
+            itemDiv.append(itemPrice, itemDiscount)
         } else{
             let itemPrice = document.createElement('h4')
             itemPrice.textContent = `$${item.price}`
-            itemPrice.className = 'item-price'
-            itemDiv.append(itemName, itemPrice)
+            itemPrice.className = 'item-price-alone'
+            itemDiv.append(itemPrice)
         }
 
         let itemButton = document.createElement('button')
@@ -246,12 +248,23 @@ function renderBagModal () {
             state.cart.splice(state.cart.indexOf(item), 1)
             render()
         })
-        itemDiv.append(itemButton)
-        itemDiv2.append(itemDiv)
+
+        
+
+        itemDiv2.append(itemName, itemDiv, itemButton)
         itemEl.append(itemImage, itemDiv2)
         items.append(itemEl)
     }
 
+    let totalButton = document.createElement('button')
+        totalButton.textContent = `Pay now: $${state.total}` 
+        totalButton.className = 'total-button'
+        totalButton.addEventListener('click', function(){
+            state.cart = []
+            state.total = 0
+            render()
+        })
+    items.append(totalButton)    
     containerEl.append(closeButton, ItemBag, items)
     wrapperEl.append(containerEl)
     mainEl.append(wrapperEl)
@@ -472,6 +485,12 @@ function renderSelectedItemPage(){
     buttonEl.innerText = 'Add to Cart'
     buttonEl.className = 'add-to-cart-button'
     buttonEl.addEventListener('click', function(){
+        if(selectedItem.discountedPrice){
+        state.total = state.total + selectedItem.discountedPrice
+    } else {
+        state.total = state.total + selectedItem.price
+    }
+
         addtoCart()
         render()
     })
